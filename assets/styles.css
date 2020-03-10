@@ -1,13 +1,18 @@
-form {
+.form {
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  height: 10rem;
+  height: 14rem;
   margin: 2rem;
   padding: 2rem;
+  /* justify-content: center; */
 }
 
-.forms {
+.form-container {
   display: flex;
-  height: 10rem;
+  height: 12rem;
+}
+
+.App {
+  margin: 3rem;
 }

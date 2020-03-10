@@ -25,6 +25,34 @@ const sync = async () => {
   await client.query(SQL);
 };
 
+const readSchools = async () => {
+  const SQL = `SELECT * FROM school`;
+  const response = await client.query(SQL);
+  return response.rows;
+};
+
+const createSchools = async name => {
+  const SQL = `INSERT INTO school (id, name) VALUES ($1, $2) returning *`;
+  const response = await client.query(SQL, [uuid(), name]);
+  return response.rows[0];
+};
+
+const readStudents = async () => {
+  const SQL = `SELECT * FROM student`;
+  const response = await client.query(SQL);
+  return response.rows;
+};
+
+const createStudents = async name => {
+  const SQL = `INSERT INTO student (id, name) VALUES ($1, $2) returning *`;
+  const response = await client.query(SQL, [uuid(), name]);
+  return response.rows[0];
+};
+
 module.exports = {
   sync,
+  readSchools,
+  createSchools,
+  readStudents,
+  createStudents,
 };
