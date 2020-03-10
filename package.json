@@ -16,7 +16,8 @@
     "express": "^4.17.1",
     "pg": "^7.18.2",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "uuid": "^7.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
