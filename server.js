@@ -26,7 +26,10 @@ app.get('/', (req, res, next) => {
 
 app.get('/api/schools', (req, res, next) => {
   db.readSchools()
-    .then(schools => res.send(schools))
+    .then(schools => {
+      res.send(schools);
+      console.log(schools);
+    })
     .catch(next);
 });
 

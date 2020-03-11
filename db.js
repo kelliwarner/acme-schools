@@ -21,6 +21,10 @@ const sync = async () => {
     name VARCHAR NOT NULL,
     "schoolId" UUID REFERENCES school(id) DEFAULT NULL
   );
+
+  INSERT INTO school (id, name) VALUES ('${uuid.v4()}', 'University of Florida');
+  INSERT INTO student (id, name) VALUES ('${uuid.v4()}', 'Kelli Warner')
+
 `;
   await client.query(SQL);
 };
@@ -33,7 +37,7 @@ const readSchools = async () => {
 
 const createSchools = async name => {
   const SQL = `INSERT INTO school (id, name) VALUES ($1, $2) returning *`;
-  const response = await client.query(SQL, [uuid(), name]);
+  const response = await client.query(SQL, [uuid.v4(), name]);
   return response.rows[0];
 };
 
@@ -45,7 +49,7 @@ const readStudents = async () => {
 
 const createStudents = async name => {
   const SQL = `INSERT INTO student (id, name) VALUES ($1, $2) returning *`;
-  const response = await client.query(SQL, [uuid(), name]);
+  const response = await client.query(SQL, [uuid.v4(), name]);
   return response.rows[0];
 };
 

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import StudentForm from 'StudentForm';
+import StudentForm from './StudentForm';
+import SchoolForm from './SchoolForm';
+import SchoolDivs from './SchoolDivs';
+import UnassignedStudents from './UnassignedStudents';
 
 const App = () => {
   const [schools, setSchools] = useState([]);
@@ -18,20 +21,21 @@ const App = () => {
 
   const createSchool = async e => {
     e.preventDefault();
-    console.dir(e.target[0].value);
-    await axios.post('/api/schools');
+    const newSchool = e.target[0].value;
+    await axios
+      .post('/api/schools', { name: newSchool })
+      .then(
+        axios.get('/api/schools').then(results => setSchools(results.data))
+      );
   };
-
-  const schoolList = () => {
-    schools.map(school => {
-      return <div>{school.name}</div>;
-    });
-  };
-
-  const studentList = () => {
-    students.map(student => {
-      return <div>{student.name}</div>;
-    });
+  const createStudent = async e => {
+    e.preventDefault();
+    const newStudent = e.target[0].value;
+    await axios
+      .post('/api/students', { name: newStudent })
+      .then(
+        axios.get('/api/students').then(results => setStudents(results.data))
+      );
   };
 
   return (
@@ -39,21 +43,16 @@ const App = () => {
       <div className="main-container">
         <h1>Acme Schools</h1>
         <div className="form-container">
-          <StudentForm />
-          <div className="school form">
-            <form onSubmit={createSchool}>
-              <div className="form-group">
-                <label htmlFor="school-name">Create School</label>
-                <input className="form-control" />
-              </div>
-              <div className="form-group">
-                <button className="btn-primary">Create</button>
-              </div>
-            </form>
-          </div>
+          <StudentForm schools={schools} createStudent={createStudent} />
+          <SchoolForm createSchool={createSchool} />
         </div>
-        <div className="schools">{schoolList()}</div>
-        <div className="students">{studentList()}</div>
+        <div className="results-container">
+          <div className="unenrolled-students">
+            <h4>Unenrolled Students</h4>
+            <UnassignedStudents students={students} />
+          </div>
+          <SchoolDivs schools={schools} />
+        </div>
       </div>
     </div>
   );
