@@ -47,9 +47,13 @@ const readStudents = async () => {
   return response.rows;
 };
 
-const createStudents = async name => {
-  const SQL = `INSERT INTO student (id, name) VALUES ($1, $2) returning *`;
-  const response = await client.query(SQL, [uuid.v4(), name]);
+const createStudents = async student => {
+  const SQL = `INSERT INTO student (id, name, "schoolId") VALUES ($1, $2, $3) returning *`;
+  const response = await client.query(SQL, [
+    uuid.v4(),
+    student.name,
+    student.schoolId,
+  ]);
   return response.rows[0];
 };
 

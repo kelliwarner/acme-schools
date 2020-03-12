@@ -28,20 +28,23 @@ const App = () => {
         axios.get('/api/schools').then(results => setSchools(results.data))
       );
   };
-  const createStudent = async e => {
-    e.preventDefault();
-    const newStudent = e.target[0].value;
-    await axios
-      .post('/api/students', { name: newStudent })
-      .then(
-        axios.get('/api/students').then(results => setStudents(results.data))
-      );
+  // const newStudent = { name: '', schoolId: '' };
+  // newStudent.name = e.target[0].value;
+  // newStudent.schoolId = e.target[1][1].id;
+
+  const createStudent = async student => {
+    const result = await axios.post('/api/students', student);
+    await axios.get('/api/students').then(results => setStudents(results.data));
   };
 
   return (
     <div className="app">
       <div className="main-container">
         <h1>Acme Schools</h1>
+        <ul>
+          <li>{schools.length} schools</li>
+          <li>{students.length} students</li>
+        </ul>
         <div className="form-container">
           <StudentForm schools={schools} createStudent={createStudent} />
           <SchoolForm createSchool={createSchool} />
@@ -51,7 +54,7 @@ const App = () => {
             <h4>Unenrolled Students</h4>
             <UnassignedStudents students={students} />
           </div>
-          <SchoolDivs schools={schools} />
+          <SchoolDivs schools={schools} students={students} />
         </div>
       </div>
     </div>

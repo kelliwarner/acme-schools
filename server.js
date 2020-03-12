@@ -46,7 +46,7 @@ app.post('/api/schools', jsonParser, (req, res, next) => {
 });
 
 app.post('/api/students', jsonParser, (req, res, next) => {
-  db.createStudents(req.body.name)
+  db.createStudents(req.body)
     .then(response => {
       res.status(200).send(response);
     })
