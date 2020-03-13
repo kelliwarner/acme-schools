@@ -8,7 +8,7 @@ const UnassignedStudents = ({ students }) => {
   return (
     <ul>
       {unassignedStudents.map(student => {
-        return <li key={student.id}>{student.name}</li>;
+        return <div key={student.id}>{student.name}</div>;
       })}
     </ul>
   );

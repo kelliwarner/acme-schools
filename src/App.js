@@ -6,6 +6,11 @@ import SchoolDivs from './SchoolDivs';
 import UnassignedStudents from './UnassignedStudents';
 
 const App = () => {
+  useEffect(() => {
+    window.addEventListener('hashchange', () => {
+      setParams(qs.parse(window.location.hash.slice(1)));
+    });
+  }, []);
   const [schools, setSchools] = useState([]);
   const [students, setStudents] = useState([]);
 
@@ -19,6 +24,10 @@ const App = () => {
       .catch(ex => console.log(ex.response.data.message));
   }, []);
 
+  const enrolledStudents = students.filter(
+    student => student.schoolId !== null
+  );
+
   const createSchool = async e => {
     e.preventDefault();
     const newSchool = e.target[0].value;
@@ -28,9 +37,6 @@ const App = () => {
         axios.get('/api/schools').then(results => setSchools(results.data))
       );
   };
-  // const newStudent = { name: '', schoolId: '' };
-  // newStudent.name = e.target[0].value;
-  // newStudent.schoolId = e.target[1][1].id;
 
   const createStudent = async student => {
     const result = await axios.post('/api/students', student);
@@ -43,7 +49,9 @@ const App = () => {
         <h1>Acme Schools</h1>
         <ul>
           <li>{schools.length} schools</li>
-          <li>{students.length} students</li>
+          <li>
+            {students.length} students ({enrolledStudents.length} enrolled)
+          </li>
         </ul>
         <div className="form-container">
           <StudentForm schools={schools} createStudent={createStudent} />

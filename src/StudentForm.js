@@ -3,21 +3,15 @@ import React, { useState } from 'react';
 const StudentForm = ({ schools, createStudent }) => {
   const [student, setStudent] = useState({});
 
-  const updateStudent = e => {
-    const name = e.target.value;
-    setStudent({ ...student, name });
-  };
-
-  const updateStudent1 = e => {
-    const schoolId = e.target.value;
-    console.dir(e.target);
-    setStudent({ ...student, schoolId });
+  //VVVthis is what Travis showed me, look at it more and try to understand it better VVV
+  const updateStudent = key => e => {
+    const { value } = e.target;
+    setStudent({ ...student, [key]: value });
   };
 
   const onSubmit = e => {
     e.preventDefault();
-
-    console.log(student);
+    createStudent(student);
   };
 
   const schoolOptions = () => {
@@ -40,14 +34,14 @@ const StudentForm = ({ schools, createStudent }) => {
           <input
             type="text"
             className="form-control"
-            onChange={updateStudent}
+            onChange={updateStudent('name')}
           />
         </div>
         <div className="form-group">
           <select
             className="form-control"
             id="students"
-            onChange={updateStudent1}
+            onChange={updateStudent('schoolId')}
           >
             <option value="">Select a School</option>
             {schoolOptions()}

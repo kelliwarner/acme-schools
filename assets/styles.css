@@ -11,7 +11,7 @@
   display: flex;
 }
 
-.App {
+.Home {
   margin: 3rem;
 }
 
@@ -41,4 +41,11 @@
   margin: 2rem;
   padding: 2rem;
   width: 25vw;
+  align-items: center;
+}
+
+.enrolled-student {
+  display: flex;
+  margin: 1rem;
+  justify-content: space-between;
 }
