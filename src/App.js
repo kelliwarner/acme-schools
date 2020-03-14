@@ -4,15 +4,26 @@ import StudentForm from './StudentForm';
 import SchoolForm from './SchoolForm';
 import SchoolDivs from './SchoolDivs';
 import UnassignedStudents from './UnassignedStudents';
+import UpdateStudent from './UpdateStudent';
+import UpdateSchool from './UpdateSchool';
+
+// To do still:
+
+// New component: Update Student (w/ update & delete functionality) 9:30
+// New component: Update School (w/ update & delete functionality) 10:30
+// Routing 11:00
+// Heroku deployment 12:00
 
 const App = () => {
-  useEffect(() => {
-    window.addEventListener('hashchange', () => {
-      setParams(qs.parse(window.location.hash.slice(1)));
-    });
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener('hashchange', () => {
+  //     setParams(qs.parse(window.location.hash.slice(1)));
+  //   });
+  // }, []);
   const [schools, setSchools] = useState([]);
   const [students, setStudents] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState({});
+  const [selectedStudent, setSelectedStudent] = useState({});
 
   useEffect(() => {
     Promise.all([axios.get('/api/schools'), axios.get('/api/students')])
@@ -27,6 +38,26 @@ const App = () => {
   const enrolledStudents = students.filter(
     student => student.schoolId !== null
   );
+
+  const schoolOptions = () => {
+    return schools.map(school => {
+      return (
+        <option key={school.id} value={school.id}>
+          {school.name}
+        </option>
+      );
+    });
+  };
+
+  const handleClickStudent = student => {
+    console.log(student);
+    setSelectedStudent(student);
+  };
+
+  const handleClickSchool = school => {
+    console.log(school);
+    setSelectedSchool(school);
+  };
 
   const createSchool = async e => {
     e.preventDefault();
@@ -43,6 +74,14 @@ const App = () => {
     await axios.get('/api/students').then(results => setStudents(results.data));
   };
 
+  const updateStudent = async student => {
+    const response = await axios.put(`/api/students/${student.id}`, student);
+  };
+
+  const updateSchool = async school => {
+    const response = await axios.put(`/api/schools/${school.id}`, school);
+  };
+
   return (
     <div className="app">
       <div className="main-container">
@@ -54,15 +93,46 @@ const App = () => {
           </li>
         </ul>
         <div className="form-container">
-          <StudentForm schools={schools} createStudent={createStudent} />
+          <StudentForm
+            schools={schools}
+            createStudent={createStudent}
+            schoolOptions={schoolOptions}
+          />
           <SchoolForm createSchool={createSchool} />
         </div>
         <div className="results-container">
           <div className="unenrolled-students">
             <h4>Unenrolled Students</h4>
-            <UnassignedStudents students={students} />
+            <UnassignedStudents
+              students={students}
+              setSelectedStudent={setSelectedStudent}
+              handleClickStudent={handleClickStudent}
+            />
           </div>
-          <SchoolDivs schools={schools} students={students} />
+          <SchoolDivs
+            schools={schools}
+            students={students}
+            setStudents={setStudents}
+            updateStudent={updateStudent}
+            handleClickStudent={handleClickStudent}
+            handleClickSchool={handleClickSchool}
+          />
+          <div className="page-container">
+            <UpdateStudent
+              selectedStudent={selectedStudent}
+              schoolOptions={schoolOptions}
+              updateStudent={updateStudent}
+              students={students}
+              setStudents={setStudents}
+            />
+            <UpdateSchool
+              selectedSchool={selectedSchool}
+              setSelectedSchool={setSelectedSchool}
+              schools={schools}
+              setSchools={setSchools}
+              updateSchool={updateSchool}
+            />
+          </div>
         </div>
       </div>
     </div>

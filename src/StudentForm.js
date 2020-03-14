@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const StudentForm = ({ schools, createStudent }) => {
+const StudentForm = ({ schools, createStudent, schoolOptions }) => {
   const [student, setStudent] = useState({});
 
   //VVVthis is what Travis showed me, look at it more and try to understand it better VVV
@@ -12,16 +12,6 @@ const StudentForm = ({ schools, createStudent }) => {
   const onSubmit = e => {
     e.preventDefault();
     createStudent(student);
-  };
-
-  const schoolOptions = () => {
-    return schools.map(school => {
-      return (
-        <option key={school.id} value={school.id}>
-          {school.name}
-        </option>
-      );
-    });
   };
 
   return (

@@ -53,6 +53,38 @@ app.post('/api/students', jsonParser, (req, res, next) => {
     .catch(next);
 });
 
+app.put('/api/students/:id', (req, res, next) => {
+  db.changeStudent(req.body)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(err => console.error(err));
+});
+
+app.put('/api/schools/:id', (req, res, next) => {
+  db.changeSchool(req.body)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(err => console.error(err));
+});
+
+app.delete('/api/students/:id', (req, res, next) => {
+  db.destroyStudent(req.params.id)
+    .then(response => {
+      res.status(204).send(response);
+    })
+    .catch(err => console.error(err));
+});
+
+app.delete('/api/schools/:id', (req, res, next) => {
+  db.destroySchool(req.params.id)
+    .then(response => {
+      res.status(204).send(response);
+    })
+    .catch(err => console.error(err));
+});
+
 db.sync().then(() => {
   app.listen(port, () => {
     console.log(`listening on port ${port}...`);

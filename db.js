@@ -57,10 +57,38 @@ const createStudents = async student => {
   return response.rows[0];
 };
 
+const changeStudent = async student => {
+  console.log(student);
+  const SQL = `UPDATE student SET "schoolId"=($1) WHERE id=($2) returning *`;
+  const response = await client.query(SQL, [student.schoolId, student.id]);
+  return response.rows[0];
+};
+
+const changeSchool = async school => {
+  console.log(school);
+  const SQL = `UPDATE school SET name=($1) WHERE id=($2) returning *`;
+  const response = await client.query(SQL, [school.name, school.id]);
+  return response.rows[0];
+};
+
+const destroyStudent = async id => {
+  const SQL = 'DELETE FROM student where id= $1';
+  await client.query(SQL, [id]);
+};
+
+const destroySchool = async id => {
+  const SQL = 'DELETE FROM school where id= $1';
+  await client.query(SQL, [id]);
+};
+
 module.exports = {
   sync,
   readSchools,
   createSchools,
   readStudents,
   createStudents,
+  changeStudent,
+  changeSchool,
+  destroyStudent,
+  destroySchool,
 };

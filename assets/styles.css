@@ -49,3 +49,24 @@
   margin: 1rem;
   justify-content: space-between;
 }
+
+.update-page {
+  display: flex;
+  margin: 2rem;
+  padding: 2rem;
+  border: 1px solid black;
+  flex-direction: column;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.update-form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  padding: 1rem;
+  justify-content: space-between;
+}

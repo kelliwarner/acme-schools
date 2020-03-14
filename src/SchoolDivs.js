@@ -1,27 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-// 1) add functionality so that when the select option is changed (onchange?)
-//// the selected student is automatically assigned (or reassigned) to that school
-
-const SchoolDivs = ({ schools, students }) => {
-  const [student, setStudent] = useState({});
-
-  // const enrollStudent = e => {
-  //   console.dir(e.target.value);
-  //   // const newSchool = e.target.value;
-  //   // setStudent({ ...student, 'SchoolId': newSchool });
-  // };
+const SchoolDivs = ({
+  schools,
+  students,
+  setStudents,
+  updateStudent,
+  handleClickStudent,
+  handleClickSchool,
+}) => {
+  // unenroll & enroll functions work on the front end not but they
+  // dont persist. need to add put functions to make sure the db
+  // gets updated
 
   const enrollStudent = school => e => {
-    console.dir(e.target);
-    const newStudent = { ...student, schoolId: school.id };
-    console.log(newStudent);
-    setStudent(newStudent);
+    const updatedStudent = {
+      ...JSON.parse(e.target.value),
+      schoolId: school.id,
+    };
+    const unchangedStudents = students.filter(
+      student => student.id !== updatedStudent.id
+    );
+    updateStudent(updatedStudent);
+    setStudents([...unchangedStudents, updatedStudent]);
+  };
+
+  const unenroll = student => {
+    const unenrolledStudent = { ...student, schoolId: null };
+    console.log('unenrolledStudent is', unenrolledStudent);
+    const unchangedStudents = students.filter(
+      student => student.id !== unenrolledStudent.id
+    );
+    setStudents([...unchangedStudents, unenrolledStudent]);
   };
 
   const studentList = filteredStudents => {
     return filteredStudents.map(student => {
-      return <option key={student.id}>{student.name}</option>;
+      return (
+        <option key={student.id} value={JSON.stringify(student)}>
+          {student.name}
+        </option>
+      );
     });
   };
 
@@ -35,7 +53,7 @@ const SchoolDivs = ({ schools, students }) => {
 
     return (
       <div className="school-div" key={school.id}>
-        <h4> {school.name}</h4>
+        <h4 onClick={() => handleClickSchool(school)}> {school.name}</h4>
         <select
           className="form-control"
           id="students"
@@ -46,9 +64,18 @@ const SchoolDivs = ({ schools, students }) => {
         </select>
         <div>
           {enrolledStudents.map(student => (
-            <div className="enrolled-student" key={student.id}>
+            <div
+              className="enrolled-student"
+              key={student.id}
+              onClick={() => handleClickStudent(student)}
+            >
               {student.name}
-              <button className="btn btn-secondary">Unenroll</button>
+              <button
+                className="btn btn-secondary"
+                onClick={() => unenroll(student)}
+              >
+                Unenroll
+              </button>
             </div>
           ))}
         </div>
