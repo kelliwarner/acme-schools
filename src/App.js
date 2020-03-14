@@ -81,6 +81,10 @@ const App = ({ view }) => {
     const response = await axios.delete(`api/schools/${school.id}`);
   };
 
+  if (view === 'users') {
+    return <a href="/#view=list">Home</a>;
+  }
+
   return (
     <div className="app">
       <div className="main-container">
