@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 const UpdateSchool = ({
   selectedSchool,
-  setSelectedSchools,
   updateSchool,
   setSchools,
   schools,
+  deleteSchool,
 }) => {
   const [school, setSchool] = useState({});
 
@@ -22,6 +22,12 @@ const UpdateSchool = ({
     console.log(school);
     updateSchool(school);
     setSchools([...unchangedSchools, school]);
+  };
+
+  const removeSchool = school => {
+    deleteSchool(school);
+    const filteredSchools = schools.filter(s => s.id !== selectedSchool.id);
+    setSchools(filteredSchools);
   };
 
   return (
@@ -42,7 +48,14 @@ const UpdateSchool = ({
         </div>
       </form>
       <div className="form-group">
-        <button className="btn-danger">Delete School</button>
+        <button
+          className="btn-danger"
+          onClick={() => {
+            removeSchool(selectedSchool);
+          }}
+        >
+          Delete School
+        </button>
       </div>
     </div>
   );

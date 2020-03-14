@@ -9,10 +9,8 @@ import UpdateSchool from './UpdateSchool';
 
 // To do still:
 
-// New component: Update Student (w/ update & delete functionality) 9:30
-// New component: Update School (w/ update & delete functionality) 10:30
-// Routing 11:00
-// Heroku deployment 12:00
+// Routing
+// Heroku deployment
 
 const App = () => {
   // useEffect(() => {
@@ -82,6 +80,14 @@ const App = () => {
     const response = await axios.put(`/api/schools/${school.id}`, school);
   };
 
+  const deleteStudent = async student => {
+    const response = await axios.delete(`api/students/${student.id}`);
+  };
+
+  const deleteSchool = async school => {
+    const response = await axios.delete(`api/schools/${school.id}`);
+  };
+
   return (
     <div className="app">
       <div className="main-container">
@@ -117,22 +123,24 @@ const App = () => {
             handleClickStudent={handleClickStudent}
             handleClickSchool={handleClickSchool}
           />
-          <div className="page-container">
-            <UpdateStudent
-              selectedStudent={selectedStudent}
-              schoolOptions={schoolOptions}
-              updateStudent={updateStudent}
-              students={students}
-              setStudents={setStudents}
-            />
-            <UpdateSchool
-              selectedSchool={selectedSchool}
-              setSelectedSchool={setSelectedSchool}
-              schools={schools}
-              setSchools={setSchools}
-              updateSchool={updateSchool}
-            />
-          </div>
+        </div>
+        <div className="page-container">
+          <UpdateStudent
+            selectedStudent={selectedStudent}
+            schoolOptions={schoolOptions}
+            updateStudent={updateStudent}
+            students={students}
+            setStudents={setStudents}
+            deleteStudent={deleteStudent}
+          />
+          <UpdateSchool
+            selectedSchool={selectedSchool}
+            setSelectedSchool={setSelectedSchool}
+            schools={schools}
+            setSchools={setSchools}
+            updateSchool={updateSchool}
+            deleteSchool={deleteSchool}
+          />
         </div>
       </div>
     </div>

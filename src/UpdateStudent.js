@@ -6,9 +6,9 @@ const UpdateStudent = ({
   updateStudent,
   students,
   setStudents,
+  deleteStudent,
 }) => {
   const [student, setStudent] = useState({});
-  console.log('inside update student, students state is', students);
   const unchangedStudents = students.filter(s => s.id !== student.id);
 
   const editStudent = key => e => {
@@ -21,6 +21,14 @@ const UpdateStudent = ({
     e.preventDefault();
     updateStudent(student);
     setStudents([...unchangedStudents, student]);
+  };
+
+  const removeStudent = student => {
+    console.log('i am trying to delete', student);
+    deleteStudent(student);
+    const filteredStudents = students.filter(s => s.id !== student.id);
+    console.log('setting students to', filteredStudents);
+    setStudents(filteredStudents);
   };
 
   return (
@@ -48,7 +56,12 @@ const UpdateStudent = ({
         </div>
       </form>
       <div className="form-group">
-        <button className="btn-danger">Delete Student</button>
+        <button
+          className="btn-danger"
+          onClick={() => removeStudent(selectedStudent)}
+        >
+          Delete Student
+        </button>
       </div>
     </div>
   );
