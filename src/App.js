@@ -7,17 +7,10 @@ import UnassignedStudents from './UnassignedStudents';
 import UpdateStudent from './UpdateStudent';
 import UpdateSchool from './UpdateSchool';
 
-// To do still:
-
+// To do:
 // Routing
-// Heroku deployment
 
-const App = () => {
-  // useEffect(() => {
-  //   window.addEventListener('hashchange', () => {
-  //     setParams(qs.parse(window.location.hash.slice(1)));
-  //   });
-  // }, []);
+const App = ({ view }) => {
   const [schools, setSchools] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState({});
