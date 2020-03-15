@@ -8,10 +8,6 @@ const SchoolDivs = ({
   handleClickStudent,
   handleClickSchool,
 }) => {
-  // unenroll & enroll functions work on the front end not but they
-  // dont persist. need to add put functions to make sure the db
-  // gets updated
-
   const enrollStudent = school => e => {
     const updatedStudent = {
       ...JSON.parse(e.target.value),
@@ -53,7 +49,9 @@ const SchoolDivs = ({
 
     return (
       <div className="school-div" key={school.id}>
-        <h4 onClick={() => handleClickSchool(school)}> {school.name}</h4>
+        <a href="/#view=school">
+          <h4 onClick={() => handleClickSchool(school)}> {school.name}</h4>
+        </a>
         <select
           className="form-control"
           id="students"
@@ -69,7 +67,7 @@ const SchoolDivs = ({
               key={student.id}
               onClick={() => handleClickStudent(student)}
             >
-              {student.name}
+              <a href="/#view=student"> {student.name}</a>
               <button
                 className="btn btn-secondary"
                 onClick={() => unenroll(student)}

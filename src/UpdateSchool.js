@@ -44,18 +44,23 @@ const UpdateSchool = ({
           />
         </div>
         <div className="form-group">
-          <button className="btn-secondary">Update</button>
+          <a href="/#">
+            {' '}
+            <button className="btn-secondary">Update</button>
+          </a>
         </div>
       </form>
       <div className="form-group">
-        <button
-          className="btn-danger"
-          onClick={() => {
-            removeSchool(selectedSchool);
-          }}
-        >
-          Delete School
-        </button>
+        <a href="/#">
+          <button
+            className="btn-danger"
+            onClick={() => {
+              removeSchool(selectedSchool);
+            }}
+          >
+            Delete School
+          </button>
+        </a>
       </div>
     </div>
   );

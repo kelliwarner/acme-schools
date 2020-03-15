@@ -85,6 +85,32 @@ const App = ({ view }) => {
     return <a href="/#view=list">Home</a>;
   }
 
+  if (view === 'school') {
+    return (
+      <UpdateSchool
+        selectedSchool={selectedSchool}
+        setSelectedSchool={setSelectedSchool}
+        schools={schools}
+        setSchools={setSchools}
+        updateSchool={updateSchool}
+        deleteSchool={deleteSchool}
+      />
+    );
+  }
+
+  if (view === 'student') {
+    return (
+      <UpdateStudent
+        selectedStudent={selectedStudent}
+        schoolOptions={schoolOptions}
+        updateStudent={updateStudent}
+        students={students}
+        setStudents={setStudents}
+        deleteStudent={deleteStudent}
+      />
+    );
+  }
+
   return (
     <div className="app">
       <div className="main-container">
@@ -122,22 +148,22 @@ const App = ({ view }) => {
           />
         </div>
         <div className="page-container">
-          <UpdateStudent
+          {/* <UpdateStudent
             selectedStudent={selectedStudent}
             schoolOptions={schoolOptions}
             updateStudent={updateStudent}
             students={students}
             setStudents={setStudents}
             deleteStudent={deleteStudent}
-          />
-          <UpdateSchool
+          /> */}
+          {/* <UpdateSchool
             selectedSchool={selectedSchool}
             setSelectedSchool={setSelectedSchool}
             schools={schools}
             setSchools={setSchools}
             updateSchool={updateSchool}
             deleteSchool={deleteSchool}
-          />
+          /> */}
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ const UpdateStudent = ({
   setStudents,
   deleteStudent,
 }) => {
-  const [student, setStudent] = useState({});
+  const [student, setStudent] = useState({ ...selectedStudent });
   const unchangedStudents = students.filter(s => s.id !== student.id);
 
   const editStudent = key => e => {
@@ -19,15 +19,16 @@ const UpdateStudent = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    updateStudent(student);
-    setStudents([...unchangedStudents, student]);
+    console.log('something is happening');
+    updateStudent(student).then(response => {
+      // setStudents([...unchangedStudents, student]);
+      window.location = '';
+    });
   };
 
   const removeStudent = student => {
-    console.log('i am trying to delete', student);
     deleteStudent(student);
     const filteredStudents = students.filter(s => s.id !== student.id);
-    console.log('setting students to', filteredStudents);
     setStudents(filteredStudents);
   };
 
@@ -43,6 +44,7 @@ const UpdateStudent = ({
             type="text"
             onChange={editStudent('name')}
             className="form-control"
+            value={student.name}
           />
         </div>
         <div className="form-group">
@@ -52,16 +54,20 @@ const UpdateStudent = ({
           </select>
         </div>
         <div className="form-group">
-          <button className="btn-secondary">Update</button>
+          <a href="/#">
+            <button className="btn-secondary">Update</button>
+          </a>
         </div>
       </form>
       <div className="form-group">
-        <button
-          className="btn-danger"
-          onClick={() => removeStudent(selectedStudent)}
-        >
-          Delete Student
-        </button>
+        <a href="/#">
+          <button
+            className="btn-danger"
+            onClick={() => removeStudent(selectedStudent)}
+          >
+            Delete Student
+          </button>
+        </a>
       </div>
     </div>
   );

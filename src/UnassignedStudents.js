@@ -1,11 +1,6 @@
 import React from 'react';
 
-const UnassignedStudents = ({
-  students,
-  selectedStudent,
-  setSelectedStudent,
-  handleClickStudent,
-}) => {
+const UnassignedStudents = ({ students, handleClickStudent }) => {
   const unassignedStudents = students.filter(
     student => student.schoolId === null
   );
@@ -14,9 +9,11 @@ const UnassignedStudents = ({
     <ul>
       {unassignedStudents.map(student => {
         return (
-          <div key={student.id} onClick={() => handleClickStudent(student)}>
-            {student.name}
-          </div>
+          <a href="/#view=student" key={student.id}>
+            <div onClick={() => handleClickStudent(student)}>
+              {student.name}
+            </div>
+          </a>
         );
       })}
     </ul>
